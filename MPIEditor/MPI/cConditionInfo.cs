@@ -73,6 +73,10 @@ namespace nModelPartsInfo
             {
                 bw.Write(cMatAnimInfoConditions[i]);
             }
+            for (int i = 0; i < 48; i++)
+            {
+                bw.Write(0);
+            }
             for (int i = 0; i < 16; i++)
             {
                 cColorInfoList[i].Export(bw);
