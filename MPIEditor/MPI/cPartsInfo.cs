@@ -9,10 +9,10 @@ namespace nModelPartsInfo
     class cPartsInfo
     {
         uint PartsInfo = 1224644149;
-        int mUniqueID { get; set; }
-        int mPartsNo { get; set; }//the VisCon number
-        int mGroupID { get; set; }
-        int mTagID { get; set; }
+        public int mUniqueID { get; set; }
+        public int mPartsNo { get; set; }//the VisCon number
+        public int mGroupID { get; set; }
+        public int mTagID { get; set; }
 
         //imported constructor
         public cPartsInfo(BinaryReader br)

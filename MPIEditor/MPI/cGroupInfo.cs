@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 
 namespace nModelPartsInfo
 {
-    class cGroupInfo
+    class cGroupInfo : INotifyPropertyChanged
     {
-        public List<cTagInfo> mTagInfoList;
+        public ObservableCollection<cTagInfo> mTagInfoList { get; set; }
         uint GroupInfo = 2023676734;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public cGroupInfo(BinaryReader br)
         {
-            mTagInfoList = new List<cTagInfo>();
+            mTagInfoList = new ObservableCollection<cTagInfo>();
             uint hash = br.ReadUInt32();
             if (hash != GroupInfo)
             {
@@ -26,9 +31,18 @@ namespace nModelPartsInfo
                 mTagInfoList.Add(Tag);
             }
         }
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        public void AddNotify(cTagInfo tag)
+        {
+            mTagInfoList.Add(tag);
+            OnPropertyChanged("mTagInfoList");
+        }
         public cGroupInfo()
         {
-            mTagInfoList = new List<cTagInfo>();
+            mTagInfoList = new ObservableCollection<cTagInfo>();
             cTagInfo Tag = new cTagInfo();
             mTagInfoList.Add(Tag);
             //add one so user doesn't have to on creation of file

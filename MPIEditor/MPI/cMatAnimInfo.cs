@@ -9,11 +9,11 @@ namespace nModelPartsInfo
     class cMatAnimInfo
     {
         uint MatAnimInfo = 825521721;
-        int mMatAnimNo { get; set; }
-        int mMatID { get; set; }
-        int mMatAnimSlotNo { get; set; }
-        bool mIsAutoInterpolate { get; set; }
-        bool mIsNoResetPlay { get; set; }
+        public int mMatAnimNo { get; set; }
+        public int mMatID { get; set; }
+        public int mMatAnimSlotNo { get; set; }
+        public bool mIsAutoInterpolate { get; set; }
+        public bool mIsNoResetPlay { get; set; }
 
         public cMatAnimInfo(BinaryReader br)
         {

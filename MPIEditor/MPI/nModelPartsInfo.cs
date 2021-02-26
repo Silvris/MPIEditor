@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace nModelPartsInfo
 {
-    class nModelPartsInfo
+    class ModelPartsInfo
     {
         public List<cPartsInfo> cPartsInfoList { get; set; }
         public List<cGroupInfo> cGroupInfoList { get; set; }
@@ -20,7 +20,7 @@ namespace nModelPartsInfo
         uint version = 9;
         byte[] MPIMagic = { 77, 80, 73, 0 };
 
-        public nModelPartsInfo(BinaryReader br)
+        public ModelPartsInfo(BinaryReader br)
         {
             cPartsInfoList = new List<cPartsInfo>();
             cGroupInfoList = new List<cGroupInfo>();
@@ -62,7 +62,7 @@ namespace nModelPartsInfo
             isUseMatAnimInfo = br.ReadBoolean();
         }
 
-        public nModelPartsInfo()
+        public ModelPartsInfo()
         {
             cPartsInfoList = new List<cPartsInfo>();
             cGroupInfoList = new List<cGroupInfo>();
@@ -70,6 +70,46 @@ namespace nModelPartsInfo
             cMatAnimInfoList = new List<cMatAnimInfo>();
             isUseColorInfo = false;
             isUseMatAnimInfo = false;
+        }
+
+        public void Export(BinaryWriter bw)
+        {
+            bw.Write(IceborneMark);
+            bw.Write(version);
+            bw.Write(MPIMagic);
+            bw.Write(cPartsInfoList.Count);
+            for(int i = 0; i < cPartsInfoList.Count; i++)
+            {
+                cPartsInfoList[i].Export(bw);
+            }
+            bw.Write(cGroupInfoList.Count);
+            for(int i = 0; i < cGroupInfoList.Count; i++)
+            {
+                cGroupInfoList[i].Export(bw);
+            }
+            bw.Write(cConditionInfoList.Count);
+            for(int i = 0; i < cConditionInfoList.Count; i++)
+            {
+                cConditionInfoList[i].Export(bw);
+                if (!isUseColorInfo)
+                {
+                    if (cConditionInfoList[i].CheckColor())
+                    {
+                        isUseColorInfo = true;
+                    }
+                }
+            }
+            if(cMatAnimInfoList.Count > 0)
+            {
+                isUseMatAnimInfo = true;
+            }
+            bw.Write(cMatAnimInfoList.Count);
+            for(int i = 0; i < cMatAnimInfoList.Count; i++)
+            {
+                cMatAnimInfoList[i].Export(bw);
+            }
+            bw.Write(isUseColorInfo);
+            bw.Write(isUseMatAnimInfo);
         }
     }
 }

@@ -8,7 +8,114 @@
         Background="#303030"
         ResizeMode="CanMinimize"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Window.Resources>
+        <DataTemplate x:Key="Color">
+            <Grid>
+                <Rectangle Name="mColorA" Height="20" Width="50" HorizontalAlignment="Left" Margin="20,0,0,0" Fill="{Binding mColorABrush.colorBrush}"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="80,0,0,0" Text="{Binding mColorA.red,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorA"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="130,0,0,0" Text="{Binding mColorA.green,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorA"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="180,0,0,0" Text="{Binding mColorA.blue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorA"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="230,0,0,0" Text="{Binding mColorA.alpha,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorA"/>
+                <Rectangle Name="mColorB" Height="20" Width="50" HorizontalAlignment="Left" Margin="320,0,0,0" Fill="{Binding mColorBBrush.colorBrush}"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="380,0,0,0" Text="{Binding mColorA.red,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="430,0,0,0" Text="{Binding mColorB.green,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="480,0,0,0" Text="{Binding mColorB.blue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="530,0,0,0" Text="{Binding mColorB.alpha,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Condition">
+            <Grid>
+                <Label Foreground="#AAAAAA" Content="Condition ID:" Margin="0,20,0,0" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80,25,0,0" Width="100" Text="{Binding mConditionID, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <ListBox Height="75" ItemsSource="{Binding cGroupInfoConditions}" VerticalAlignment="Top" Background="#191919" Margin="10,60,10,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Group Condition: " Foreground="White"/>
+                                <TextBox Width="200" Text="{Binding value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox Height="75" ItemsSource="{Binding cMatAnimInfoConditions}" VerticalAlignment="Top" Background="#191919" Margin="10,140,10,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="MatAnim Condition: " Foreground="White"/>
+                                <TextBox Width="200" Text="{Binding value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox ItemTemplate="{StaticResource Color}" Margin="10,0,10,10" Height="125" VerticalAlignment="Bottom" Background="#191919" ItemsSource="{Binding cColorInfoList}"></ListBox>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="MatAnim">
+            <Grid>
+                <Border BorderThickness="3" BorderBrush="#777777" Width="150" Height="260" Margin="0,50,0,0" VerticalAlignment="Top"/>
+                <Label Margin="0,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Mat Anim No." Foreground="#AAAAAA"/>
+                <TextBox Margin="0,80,0,0" Height="20" Width="80" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding mMatAnimNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Margin="0,105,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Mat ID" Foreground="#AAAAAA"/>
+                <TextBox Margin="0,130,0,0" Height="20" Width="80" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding mMatID,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Margin="0,155,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Mat Anim Slot No." Foreground="#AAAAAA"/>
+                <TextBox Margin="0,180,0,0" Height="20" Width="80" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding mMatAnimSlotNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Margin="0,205,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Auto-Interpolate" Foreground="#AAAAAA"/>
+                <CheckBox VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,230,0,0" IsChecked="{Binding mIsAutoInterpolate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Margin="0,255,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="No Reset Play?" Foreground="#AAAAAA"/>
+                <CheckBox VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,280,0,0" IsChecked="{Binding mIsNoResetPlay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Parts">
+            <Grid>
+                <Border BorderThickness="3" BorderBrush="#777777" Width="150" Height="240" Margin="0,50,0,0" VerticalAlignment="Top"/>
+                <Label Margin="0,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Unique ID" Foreground="#AAAAAA"/>
+                <TextBox Margin="0,80,0,0" Height="20" Width="80" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding mUniqueID,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Margin="0,105,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Parts No." Foreground="#AAAAAA"/>
+                <TextBox Margin="0,130,0,0" Height="20" Width="80" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding mPartsNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Margin="0,155,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Group ID" Foreground="#AAAAAA"/>
+                <TextBox Margin="0,180,0,0" Height="20" Width="80" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding mGroupID,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Margin="0,205,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Tag ID" Foreground="#AAAAAA"/>
+                <TextBox Margin="0,230,0,0" Height="20" Width="80" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding mTagID,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Tag">
+            <Grid>
+                <Button Height="20" Width="50" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" Content="Add Tag" Click="AddTag"/>
+                <ListBox Height="50" ItemsSource="{Binding cPartsInfoID}" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#191919" Margin="10,40,10,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Group Condition: " Foreground="White"/>
+                                <TextBox Width="200" Text="{Binding value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Group">
+            <Grid>
+                <Button Content="Add mTagInfo" Width="100" Height="20" VerticalAlignment="Top" Margin="0,10,0,0" Click="AddTagInfo"/>
+                <ListBox Margin="0,30,0,0" Background="#222222" ItemsSource="{Binding mTagInfoList}" ItemTemplate="{StaticResource Tag}"/>
+            </Grid>
+        </DataTemplate>
+        <local:TypeSelector x:Key="TypeSearch" ColorInfo="{StaticResource Color}" ConditionInfo="{StaticResource Condition}" GroupInfo="{StaticResource Group}" MatAnimInfo="{StaticResource MatAnim}" PartsInfo="{StaticResource Parts}" TagInfo="{StaticResource Tag}"/>
+    </Window.Resources>
 
+    <Grid>
+        <Menu Height="20" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <MenuItem Header="Import File" Click="ImportFile"/>
+            <MenuItem Header="Export File" Click="ExportFile"/>
+        </Menu>
+        <Button Content="Add" Grid.Column="0" Height="20" VerticalAlignment="Top" Width="60" Margin="0,30,80,0" Click="AddClass"/>
+        <Button Content="Remove" Grid.Column="0" Height="20" VerticalAlignment="Top" Width="60" Margin="80,30,0,0" Click="RemoveSelected"/>
+        <TreeView Grid.Column="0" Margin="10,60,10,20" Background="#222222" Name="treeView1" SelectedItemChanged="treeView1_SelectedItemChanged"></TreeView>
+        <Grid Background="#222222" Grid.Column="1" Margin="10,40,10,20">
+            <ContentControl Name="ContentController" ContentTemplateSelector="{StaticResource TypeSearch}"/>
+        </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
     </Grid>
 </Window>

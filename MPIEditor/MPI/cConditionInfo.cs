@@ -6,20 +6,46 @@ using System.Windows;
 
 namespace nModelPartsInfo
 {
+    class UIntObject
+    {
+        public uint value { get; set; }
+
+        public UIntObject(uint val)
+        {
+            value = val;
+        }
+        public UIntObject()
+        {
+            value = 0;
+        }
+    }
     class cConditionInfo
     {
         //this one is interesting
         uint ConditionInfo = 1883508046;
         public int mConditionID { get; set; }
-        public List<uint> cGroupInfoConditions { get; set; }
-        public List<uint> cMatAnimInfoConditions { get; set; }
+        public List<UIntObject> cGroupInfoConditions { get; set; }
+        public List<UIntObject> cMatAnimInfoConditions { get; set; }
         public List<cColorInfo> cColorInfoList { get; set; }
         //these lists all have set lengths, but working with them is easier for lists because of Selected Index
+        public bool CheckColor()
+        {
+            bool colorPresent = false;
+            for(int i = 0; i< cColorInfoList.Count; i++)
+            {
+                if (cColorInfoList[i].CheckColor())
+                {
+                    colorPresent = true;
+                    break;
+                }
+            }
+            return colorPresent;
+        }
 
         public cConditionInfo(BinaryReader br)
         {
-            cGroupInfoConditions = new List<uint>();
-            cMatAnimInfoConditions = new List<uint>();
+            cGroupInfoConditions = new List<UIntObject>();
+            cMatAnimInfoConditions = new List<UIntObject>();
             cColorInfoList = new List<cColorInfo>();
             uint hash = br.ReadUInt32();
             if (hash != ConditionInfo)
@@ -28,11 +54,11 @@ namespace nModelPartsInfo
             }
             for(int i = 0; i < 16; i++)
             {
-                cGroupInfoConditions.Add(br.ReadUInt32());
+                cGroupInfoConditions.Add(new UIntObject(br.ReadUInt32()));
             }
             for (int i = 0; i < 16; i++)
             {
-                cMatAnimInfoConditions.Add(br.ReadUInt32());
+                cMatAnimInfoConditions.Add(new UIntObject(br.ReadUInt32()));
             }
             for (int i = 0; i < 48; i++)
             {
@@ -56,8 +82,8 @@ namespace nModelPartsInfo
 
         public cConditionInfo()
         {
-            cGroupInfoConditions = new List<uint>(16);
-            cMatAnimInfoConditions = new List<uint>(16);
+            cGroupInfoConditions = new List<UIntObject>(16);
+            cMatAnimInfoConditions = new List<UIntObject>(16);
             cColorInfoList = new List<cColorInfo>(16);
             mConditionID = 0;
         }
@@ -67,11 +93,11 @@ namespace nModelPartsInfo
             bw.Write(ConditionInfo);//hash datatype
             for (int i = 0; i < 16; i++)
             {
-                bw.Write(cGroupInfoConditions[i]);
+                bw.Write(cGroupInfoConditions[i].value);
             }
             for (int i = 0; i < 16; i++)
             {
-                bw.Write(cMatAnimInfoConditions[i]);
+                bw.Write(cMatAnimInfoConditions[i].value);
             }
             for (int i = 0; i < 48; i++)
             {
