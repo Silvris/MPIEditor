@@ -28,7 +28,7 @@ namespace nModelPartsInfo
             int cPartsCount = br.ReadInt32();
             for(int i = 0; i< cPartsCount; i++)
             {
-                cPartsInfoID.Add(new UIntObject(br.ReadUInt32()));
+                cPartsInfoID.Add(new UIntObject(br.ReadUInt32(),(uint)i));
             }
             
         }
@@ -45,7 +45,7 @@ namespace nModelPartsInfo
         public cTagInfo()
         {
             cPartsInfoID = new ObservableCollection<UIntObject>();
-            cPartsInfoID.Add(new UIntObject(0));
+            cPartsInfoID.Add(new UIntObject(0,0));
         }
 
         public void Export(BinaryWriter bw)

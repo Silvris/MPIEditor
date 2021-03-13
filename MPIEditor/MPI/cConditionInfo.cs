@@ -9,14 +9,17 @@ namespace nModelPartsInfo
     class UIntObject
     {
         public uint value { get; set; }
+        public uint index { get; set; }
 
-        public UIntObject(uint val)
+        public UIntObject(uint val,uint idx)
         {
             value = val;
+            index = idx +1;
         }
-        public UIntObject()
+        public UIntObject(uint idx)
         {
             value = 0;
+            index = idx +1;
         }
     }
     class cConditionInfo
@@ -54,23 +57,24 @@ namespace nModelPartsInfo
             }
             for(int i = 0; i < 16; i++)
             {
-                cGroupInfoConditions.Add(new UIntObject(br.ReadUInt32()));
+                cGroupInfoConditions.Add(new UIntObject(br.ReadUInt32(), (uint)i));
             }
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 64; i++)
             {
-                cMatAnimInfoConditions.Add(new UIntObject(br.ReadUInt32()));
+                cMatAnimInfoConditions.Add(new UIntObject(br.ReadUInt32(),(uint)i));
             }
-            for (int i = 0; i < 48; i++)
+            /*for (int i = 0; i < 48; i++)
             {
                 uint unknValue = br.ReadUInt32();
                 //we just need to skip through here, but it is useful for finding if it ever is used
                 //it might just be that it uses that many for MatAnim
                 //you can definitely fit 64 different material animations into a timl
+                //should've checked Nergigante
                 if(unknValue != 0)
                 {
                     MessageBox.Show("UnknValue not 0 at i = "+(i+32)+".");
                 }
-            }
+            }*/
             //now read cColorInfo
             for(int i = 0; i < 16; i++)
             {
@@ -95,13 +99,9 @@ namespace nModelPartsInfo
             {
                 bw.Write(cGroupInfoConditions[i].value);
             }
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 64; i++)
             {
                 bw.Write(cMatAnimInfoConditions[i].value);
-            }
-            for (int i = 0; i < 48; i++)
-            {
-                bw.Write(0);
             }
             for (int i = 0; i < 16; i++)
             {
