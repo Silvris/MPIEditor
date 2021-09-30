@@ -17,10 +17,10 @@
                 <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="180,0,0,0" Text="{Binding mColorA.blue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorA"/>
                 <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="230,0,0,0" Text="{Binding mColorA.alpha,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorA"/>
                 <Rectangle Name="mColorB" Height="20" Width="50" HorizontalAlignment="Left" Margin="320,0,0,0" Fill="{Binding mColorBBrush.colorBrush}"/>
-                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="380,0,0,0" Text="{Binding mColorA.red,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="430,0,0,0" Text="{Binding mColorB.green,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="480,0,0,0" Text="{Binding mColorB.blue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="530,0,0,0" Text="{Binding mColorB.alpha,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="380,0,0,0" Text="{Binding mColorB.red,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorB"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="430,0,0,0" Text="{Binding mColorB.green,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorB"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="480,0,0,0" Text="{Binding mColorB.blue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorB"/>
+                <TextBox Height="20" Width="40" HorizontalAlignment="Left" Margin="530,0,0,0" Text="{Binding mColorB.alpha,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeMColorB"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Condition">
